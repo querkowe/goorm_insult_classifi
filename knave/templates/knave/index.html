@@ -9,7 +9,7 @@
 주소를 넣어주세요
 <form class="form" action="{% url 'knave:search' %}" method="post">
   {% csrf_token %}
-  <input type="text" name="url" value="url">
+  <input type="text" name="url" placeholder="url">
   <input type="submit" name="submit" value="enter">
 </form>
 {% endblock %}

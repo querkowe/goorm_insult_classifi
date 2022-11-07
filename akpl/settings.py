@@ -9,9 +9,12 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+from googleapiclient.discovery import build
 
 from pathlib import Path
 import os
+
+from . import knave_init
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,8 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
+API_KEY = knave_init.youtube_api_key()
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$8%e_u8(#)&v(2fqs^aphs70hmhw360^3!o3q0=3xc8v-ak=uk'
+SECRET_KEY = knave_init.django_secret_key()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
