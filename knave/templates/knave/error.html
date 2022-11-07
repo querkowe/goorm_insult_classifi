@@ -1,0 +1,10 @@
+{% extends 'knave/base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+{{ content }}
+<a href="{% url 'krave:index' %}"></a>
+{% endblock %}
