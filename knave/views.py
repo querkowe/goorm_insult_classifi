@@ -23,20 +23,67 @@ def search(request):
     #     video = re.findall(url_pattern, url)[-1]
     #
     #     comments = scrape.get_comments(video)
-    #     content = analysis.prepare_model(comments)['comment']
+    #     content = analysis.prepare_model(comments)
     #
     #     return render(request, 'knave/result.html', {'title': title, 'content': content})
     # except:
     #     return render(request, 'knave/result.html', {'title': 'Error', 'content': 'something goes wrong...'})
-    url = request.POST['url']
-    print(url)
+    text = request.POST.get('text')
+    category = int(request.POST.get('category'))
+    print(text)
+    print(category)
+    res = ""
 
-    url_pattern = r'[^\/\=]+'
+    if category == 1:
+        res = keyword(request, text)
+    elif category == 2:
+        res = channels(request, text)
+    elif category == 3:
+        res = video(request, text)
 
-    title = 'search'
-    video = re.findall(url_pattern, url)[-1]
+    return res
+
+def channel(request, id):
+
+    title = "channel"
+
+    print(id)
+
+    content = scrape.search_channel(id)
+
+    return render(request, 'knave/channel.html', {'title': title, 'content': content})
+
+
+def channels(request, query):
+
+    title = "channels"
+
+    print(query)
+
+    content = scrape.channel_list(query)
+
+    return render(request, 'knave/list.html', {'title': title, 'content': content})
+
+
+def keyword(request, query):
+
+    title = "keyword"
+
+    print(query)
+
+    content = scrape.search_text(query)
+
+    return render(request, 'knave/keyword.html', {'title': title, 'content': content})
+
+
+def video(request, id):
+
+    video = id
+
+    print(video)
 
     comments = scrape.get_comments(video)
+
     content = analysis.prepare_model(comments)
 
     return render(request, 'knave/result.html', {'title': title, 'content': content})

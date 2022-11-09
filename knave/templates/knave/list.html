@@ -1,0 +1,19 @@
+{% extends 'knave/base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+{% for chan in content %}
+  <div>
+    <div>
+      <a href="{% url 'knave:channel' id=chan.3 %}">{{chan.0 | safe}}</a> <br>
+      {{chan.1 | safe}} <br>
+      {{chan.2 | safe}} <br>
+      {{chan.3 | safe}} <br>
+      {{chan.4 | safe}} <br>
+    </div>
+  </div>
+{% endfor %}
+{% endblock %}

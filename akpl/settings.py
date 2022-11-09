@@ -24,6 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 API_KEY = knave_init.youtube_api_key()
+
+YOUTUBE_OBJ = build("youtube", "v3", developerKey=API_KEY)
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = knave_init.django_secret_key()
 

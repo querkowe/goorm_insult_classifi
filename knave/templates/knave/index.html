@@ -6,10 +6,14 @@
 
 {% block content %}
 {{ content }}
-주소를 넣어주세요
+검색어를 넣어주세요
 <form class="form" action="{% url 'knave:search' %}" method="post">
   {% csrf_token %}
-  <input type="text" name="url" placeholder="url">
+  <select name="category">
+    <option value="1">토픽</option>
+    <option value="2">채널</option>
+  </select>
+  <input type="text" name="text" placeholder="input">
   <input type="submit" name="submit" value="enter">
 </form>
 {% endblock %}
