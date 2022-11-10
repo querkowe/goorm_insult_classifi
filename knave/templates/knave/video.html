@@ -21,6 +21,17 @@
   악성 댓글 {{ video.12 | safe }} <br>
   {{ video.13 | safe }} <br>
 </div>
+
+
+<div class = chart>
+    <canvas id="chart_1" width="300" height="300"></canvas>
+    <script>chart_doughnut({{ video.12 | safe }}, {{ video.11 | safe }}, 'chart_1')</script>
+</div>
+
+
+
+
+
 {% endfor %}
 {{ video | safe }}
 {% endblock %}
