@@ -19,27 +19,39 @@ def get_comments(video):
 
     comments = list()
     api_obj = settings.YOUTUBE_OBJ
+    good_count = 0
+    bad_count = 0
     response = api_obj.commentThreads().list(part='snippet,replies', videoId=video_id, maxResults=100).execute()
 
-    while response and len(comments) < limit:
+    if response and len(comments) < limit:
         for item in response['items']:
             comment = item['snippet']['topLevelComment']['snippet']
 
-            comments.append([comment['textDisplay'], comment['authorDisplayName'], comment['publishedAt'], comment['likeCount'], analysis.predict_sent(comment['textDisplay'])])
+            # comments.append([comment['textDisplay'], comment['authorDisplayName'], comment['publishedAt'], comment['likeCount']])
+            comments.append([comment['textDisplay'], comment['publishedAt'], comment['likeCount']])
 
-            if item['snippet']['totalReplyCount'] > 0:
-                for reply_item in item['replies']['comments']:
-                    reply = reply_item['snippet']
-                    comments.append([reply['textDisplay'], reply['authorDisplayName'], reply['publishedAt'], reply['likeCount']])
+            result = analysis.predict_sent(comments[-1][0])
 
-        if 'nextPageToken' in response:
-            response = api_obj.commentThreads().list(part='snippet,replies', videoId=video_id, pageToken=response['nextPageToken'], maxResults=100).execute()
-        else:
-            break
+            if result == 0:
+                result = " >> 악성댓글 👿"
+                bad_count += 1
+            elif result == 1:
+                result = " >> 정상댓글 😀"
+                good_count += 1
+
+            comments[-1].append(result)
+
+            # if item['snippet']['totalReplyCount'] > 0:
+            #     for reply_item in item['replies']['comments']:
+            #         reply = reply_item['snippet']
+            #         comments.append([reply['textDisplay'], reply['authorDisplayName'], reply['publishedAt'], reply['likeCount']])
+
+        # if 'nextPif
 
     # print(len(comments))
 
-    return pd.DataFrame(comments, columns=['comment', 'author', 'date', 'num_likes', 'is_bad']).to_html().strip()
+    # return good_count, bad_count, pd.DataFrame(comments, columns=['comment', 'author', 'date', 'num_likes', 'is_bad']).to_html().strip()
+    return good_count, bad_count, pd.DataFrame(comments, columns=['comment', 'date', 'num_likes', 'is_bad']).to_html().strip()
 
 def search_text(text):
     query_text = text
@@ -61,6 +73,8 @@ def search_text(text):
 
     for i in range(len(search_response['items'])):
 
+        good_count, bad_count, comments_df = get_comments(search_response['items'][i]['id']['videoId'])
+
         videos.append(
             [
                 search_response['items'][i]['id']['videoId'].strip(),
@@ -70,7 +84,9 @@ def search_text(text):
                 search_response['items'][i]['snippet']['channelId'].strip(),
                 search_response['items'][i]['snippet']['channelTitle'].strip(),
                 search_response['items'][i]['snippet']['publishedAt'].strip(),
-                get_comments(search_response['items'][i]['id']['videoId']).strip()
+                good_count,
+                bad_count,
+                comments_df
             ]
         )
 
@@ -129,6 +145,8 @@ def search_channel(channel):
 
     for i in range(len(search_response['items'])):
 
+        good_count, bad_count, comments_df = get_comments(search_response['items'][i]['id']['videoId'])
+
         videos.append(
             [
                 search_response['items'][i]['id']['videoId'].strip(),
@@ -138,7 +156,9 @@ def search_channel(channel):
                 search_response['items'][i]['snippet']['channelId'].strip(),
                 search_response['items'][i]['snippet']['channelTitle'].strip(),
                 search_response['items'][i]['snippet']['publishedAt'].strip(),
-                get_comments(search_response['items'][i]['id']['videoId']).strip()
+                good_count,
+                bad_count,
+                comments_df
             ]
         )
 
@@ -160,6 +180,8 @@ def search_video(id):
 
     for i in range(len(search_response['items'])):
 
+        good_count, bad_count, comments_df = get_comments(search_response['items'][i]['id'])
+
         videos.append(
             [
                 search_response['items'][i]['id'],
@@ -173,7 +195,9 @@ def search_video(id):
                 search_response['items'][i]['statistics']['likeCount'].strip(),
                 search_response['items'][i]['statistics']['favoriteCount'].strip(),
                 search_response['items'][i]['statistics']['commentCount'].strip(),
-                get_comments(search_response['items'][i]['id']).strip()
+                good_count,
+                bad_count,
+                comments_df
             ]
         )
 
@@ -195,6 +219,8 @@ def preview_video(id):
 
     for i in range(len(search_response['items'])):
 
+        good_count, bad_count, comments_df = get_comments(search_response['items'][i]['id'])
+
         videos.append(
             [
                 search_response['items'][i]['id'],
@@ -208,7 +234,9 @@ def preview_video(id):
                 search_response['items'][i]['statistics']['likeCount'].strip(),
                 search_response['items'][i]['statistics']['favoriteCount'].strip(),
                 search_response['items'][i]['statistics']['commentCount'].strip(),
-                get_comments(search_response['items'][i]['id']).strip()
+                good_count,
+                bad_count,
+                comments_df
             ]
         )
 

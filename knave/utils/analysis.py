@@ -33,10 +33,15 @@ def predict_sent(sent):
 
     logits = logits.detach().cpu()
     result = logits.argmax(-1)
-    
+
+    # if result == 0:
+    #     result = " >> 악성댓글 👿"
+    # elif result == 1:
+    #     result = " >> 정상댓글 😀"
+
     if result == 0:
-        result = " >> 악성댓글 👿"
+        result = 0
     elif result == 1:
-        result = " >> 정상댓글 😀"
+        result = 1
 
     return result

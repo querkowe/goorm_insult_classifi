@@ -13,7 +13,9 @@
   <a href="{% url 'knave:channel' id=video.4 %}">{{ video.5 | safe }}</a> <br>
   {{ video.5 | safe }} <br>
   {{ video.6 | safe }} <br>
-  {{ video.7 | safe }} <br>
+  정상 댓글 {{ video.7 | safe }} <br>
+  악성 댓글 {{ video.8 | safe }} <br>
+  {{ video.9 | safe }} <br>
 </div>
 {% endfor %}
 {% endblock %}
