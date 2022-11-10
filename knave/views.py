@@ -4,7 +4,7 @@ from django.http import Http404
 import re
 import pandas as pd
 
-from .utils import analysis, scrape
+from .utils import scrape
 
 # Create your views here.
 def index(request):
@@ -78,12 +78,12 @@ def keyword(request, query):
 
 def video(request, id):
 
+    title = "video"
+
     video = id
 
     print(video)
 
-    comments = scrape.get_comments(video)
+    content = scrape.search_video(video)
 
-    content = analysis.prepare_model(comments)
-
-    return render(request, 'knave/result.html', {'title': title, 'content': content})
+    return render(request, 'knave/video.html', {'title': title, 'content': content})

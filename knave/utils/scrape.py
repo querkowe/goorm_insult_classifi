@@ -3,6 +3,8 @@ from oauth2client.tools import argparser
 from django.conf import settings
 import pandas as pd
 
+from . import analysis
+
 def get_comments(video):
 
     # print(video)
@@ -22,7 +24,8 @@ def get_comments(video):
     while response and len(comments) < limit:
         for item in response['items']:
             comment = item['snippet']['topLevelComment']['snippet']
-            comments.append([comment['textDisplay'], comment['authorDisplayName'], comment['publishedAt'], comment['likeCount']])
+
+            comments.append([comment['textDisplay'], comment['authorDisplayName'], comment['publishedAt'], comment['likeCount'], analysis.predict_sent(comment['textDisplay'])])
 
             if item['snippet']['totalReplyCount'] > 0:
                 for reply_item in item['replies']['comments']:
@@ -36,7 +39,7 @@ def get_comments(video):
 
     # print(len(comments))
 
-    return pd.DataFrame(comments, columns=['comment', 'author', 'date', 'num_likes']).to_html()
+    return pd.DataFrame(comments, columns=['comment', 'author', 'date', 'num_likes', 'is_bad']).to_html().strip()
 
 def search_text(text):
     query_text = text
@@ -59,16 +62,16 @@ def search_text(text):
     for i in range(len(search_response['items'])):
 
         videos.append(
-            (
-                search_response['items'][i]['id']['videoId'],
-                search_response['items'][i]['snippet']['title'],
-                search_response['items'][i]['snippet']['description'],
-                search_response['items'][i]['snippet']['thumbnails']['high']['url'],
-                search_response['items'][i]['snippet']['channelId'],
-                search_response['items'][i]['snippet']['channelTitle'],
-                search_response['items'][i]['snippet']['publishedAt'],
-                get_comments(search_response['items'][i]['id']['videoId'])
-            )
+            [
+                search_response['items'][i]['id']['videoId'].strip(),
+                search_response['items'][i]['snippet']['title'].strip(),
+                search_response['items'][i]['snippet']['description'].strip(),
+                search_response['items'][i]['snippet']['thumbnails']['high']['url'].strip(),
+                search_response['items'][i]['snippet']['channelId'].strip(),
+                search_response['items'][i]['snippet']['channelTitle'].strip(),
+                search_response['items'][i]['snippet']['publishedAt'].strip(),
+                get_comments(search_response['items'][i]['id']['videoId']).strip()
+            ]
         )
 
     return videos
@@ -94,14 +97,14 @@ def channel_list(text):
     for i in range(len(search_response['items'])):
 
         channels.append(
-            (
-                search_response['items'][i]['snippet']['title'],
-                search_response['items'][i]['snippet']['description'],
-                search_response['items'][i]['snippet']['thumbnails']['high']['url'],
-                search_response['items'][i]['snippet']['channelId'],
+            [
+                search_response['items'][i]['snippet']['title'].strip(),
+                search_response['items'][i]['snippet']['description'].strip(),
+                search_response['items'][i]['snippet']['thumbnails']['high']['url'].strip(),
+                search_response['items'][i]['snippet']['channelId'].strip(),
                 # search_response['items'][i]['snippet']['channelTitle'],
-                search_response['items'][i]['snippet']['publishedAt'],
-            )
+                search_response['items'][i]['snippet']['publishedAt'].strip(),
+            ]
         )
 
     return channels
@@ -127,16 +130,86 @@ def search_channel(channel):
     for i in range(len(search_response['items'])):
 
         videos.append(
-            (
-                search_response['items'][i]['id']['videoId'],
-                search_response['items'][i]['snippet']['title'],
-                search_response['items'][i]['snippet']['description'],
-                search_response['items'][i]['snippet']['thumbnails']['high']['url'],
-                search_response['items'][i]['snippet']['channelId'],
-                search_response['items'][i]['snippet']['channelTitle'],
-                search_response['items'][i]['snippet']['publishedAt'],
-                get_comments(search_response['items'][i]['id']['videoId'])
-            )
+            [
+                search_response['items'][i]['id']['videoId'].strip(),
+                search_response['items'][i]['snippet']['title'].strip(),
+                search_response['items'][i]['snippet']['description'].strip(),
+                search_response['items'][i]['snippet']['thumbnails']['high']['url'].strip(),
+                search_response['items'][i]['snippet']['channelId'].strip(),
+                search_response['items'][i]['snippet']['channelTitle'].strip(),
+                search_response['items'][i]['snippet']['publishedAt'].strip(),
+                get_comments(search_response['items'][i]['id']['videoId']).strip()
+            ]
+        )
+
+    return videos
+
+def search_video(id):
+    query_text = id
+    youtube = settings.YOUTUBE_OBJ
+
+    search_response = youtube.videos().list(
+        id=query_text,
+        part="id,snippet,statistics",
+        # videoEmbeddable=true,
+        # regionCode="kr",
+        # relevanceLanguage="ko"
+    ).execute()
+
+    videos = []
+
+    for i in range(len(search_response['items'])):
+
+        videos.append(
+            [
+                search_response['items'][i]['id'],
+                search_response['items'][i]['snippet']['title'].strip(),
+                search_response['items'][i]['snippet']['description'].strip(),
+                search_response['items'][i]['snippet']['thumbnails']['high']['url'].strip(),
+                search_response['items'][i]['snippet']['channelId'].strip(),
+                search_response['items'][i]['snippet']['channelTitle'].strip(),
+                search_response['items'][i]['snippet']['publishedAt'].strip(),
+                search_response['items'][i]['statistics']['viewCount'].strip(),
+                search_response['items'][i]['statistics']['likeCount'].strip(),
+                search_response['items'][i]['statistics']['favoriteCount'].strip(),
+                search_response['items'][i]['statistics']['commentCount'].strip(),
+                get_comments(search_response['items'][i]['id']).strip()
+            ]
+        )
+
+    return videos
+
+def preview_video(id):
+    query_text = id
+    youtube = settings.YOUTUBE_OBJ
+
+    search_response = youtube.videos().list(
+        id=query_text,
+        part="id,snippet,statistics",
+        # videoEmbeddable=true,
+        # regionCode="kr",
+        # relevanceLanguage="ko"
+    ).execute()
+
+    videos = []
+
+    for i in range(len(search_response['items'])):
+
+        videos.append(
+            [
+                search_response['items'][i]['id'],
+                search_response['items'][i]['snippet']['title'].strip(),
+                search_response['items'][i]['snippet']['description'].strip(),
+                search_response['items'][i]['snippet']['thumbnails']['high']['url'].strip(),
+                search_response['items'][i]['snippet']['channelId'].strip(),
+                search_response['items'][i]['snippet']['channelTitle'].strip(),
+                search_response['items'][i]['snippet']['publishedAt'].strip(),
+                search_response['items'][i]['statistics']['viewCount'].strip(),
+                search_response['items'][i]['statistics']['likeCount'].strip(),
+                search_response['items'][i]['statistics']['favoriteCount'].strip(),
+                search_response['items'][i]['statistics']['commentCount'].strip(),
+                get_comments(search_response['items'][i]['id']).strip()
+            ]
         )
 
     return videos

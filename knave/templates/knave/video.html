@@ -5,5 +5,19 @@
 {% endblock %}
 
 {% block content %}
-{{ content | safe }}
+{% for video in content %}
+<div>
+  <a href="https://youtu.be/{{video.0}}">{{ video.1 | safe }}</a> <br>
+  {{ video.2 }} <br>
+  <img src="{{ video.3 }}" alt="{{video.1}}"> <br>
+  <a href="{% url 'knave:channel' id=video.4 %}">{{ video.5 | safe }}</a> <br>
+  {{ video.6 | safe }} <br>
+  {{ video.7 | safe }} <br>
+  조회수 {{ video.8 | safe }} <br>
+  좋아요 {{ video.9 | safe }} <br>
+  즐겨찾기 {{ video.10 | safe }} <br>
+  댓글 {{ video.11 | safe }} <br>
+</div>
+{% endfor %}
+{{ video | safe }}
 {% endblock %}
