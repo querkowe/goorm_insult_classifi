@@ -137,3 +137,6 @@ dmypy.json
 *.json
 *.pt
 *.bin
+
+# sandbox
+*/test.html
