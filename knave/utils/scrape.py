@@ -41,17 +41,11 @@ def get_comments(video):
 
             comments[-1].append(result)
 
-            # if item['snippet']['totalReplyCount'] > 0:
-            #     for reply_item in item['replies']['comments']:
-            #         reply = reply_item['snippet']
-            #         comments.append([reply['textDisplay'], reply['authorDisplayName'], reply['publishedAt'], reply['likeCount']])
-
-        # if 'nextPif
 
     # print(len(comments))
 
     # return good_count, bad_count, pd.DataFrame(comments, columns=['comment', 'author', 'date', 'num_likes', 'is_bad']).to_html().strip()
-    return good_count, bad_count, pd.DataFrame(comments, columns=['comment', 'date', 'num_likes', 'is_bad']).to_html().strip()
+    return good_count, bad_count, pd.DataFrame(comments, columns=['comment', 'date', 'num_likes', 'is_bad']).to_html(classes='table', index=False).strip()
 
 def search_text(text):
     query_text = text

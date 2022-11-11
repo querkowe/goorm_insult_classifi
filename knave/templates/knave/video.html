@@ -6,32 +6,39 @@
 
 {% block content %}
 {% for video in content %}
-<div>
-  {{ video.1 | safe }}
-  <a href="https://youtu.be/{{video.0}}">영상보기</a> <br>
-  {{ video.2 }} <br>
-  <img src="{{ video.3 }}" alt="{{video.1}}"> <br>
-  <a href="{% url 'knave:channel' id=video.4 %}">{{ video.5 | safe }}</a> <br>
-  {{ video.6 | safe }} <br>
-  조회수 {{ video.7 | safe }} <br>
-  좋아요 {{ video.8 | safe }} <br>
-  즐겨찾기 {{ video.9 | safe }} <br>
-  댓글 {{ video.10 | safe }} <br>
-  정상 댓글 {{ video.11 | safe }} <br>
-  악성 댓글 {{ video.12 | safe }} <br>
-  {{ video.13 | safe }} <br>
+<div class="container">
+  <div class="card-group">
+      <div class="card">
+        <img class="fluid card-img-top" src="{{ video.3 }}" alt="{{video.1}}"> <br>
+        <div class="card-body">
+          <h5 class="card-title">
+            {{ video.1 | safe }}
+          </h5>
+          <a href="https://youtu.be/{{video.0}}">영상보기</a> <br>
+          <p class="card-body">
+            {{ video.2 }}
+          </p>
+          <a href="{% url 'knave:channel' id=video.4 %}">{{ video.5 | safe }}</a> <br>
+          {{ video.6 | safe }} <br>
+        </div>
+      </div>
+      <div class="chart card">
+        <div class="card-img-top">
+          <canvas id="chart_1"></canvas>
+          <script>chart_doughnut({{ video.12 | safe }}, {{ video.11 | safe }}, 'chart_1')</script>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">
+            통계
+          </h5>
+          조회수 {{ video.7 | safe }} <br>
+          좋아요 {{ video.8 | safe }} <br>
+          즐겨찾기 {{ video.9 | safe }} <br>
+          댓글 {{ video.10 | safe }} <br>
+        </div>
+      </div>
+  </div>
+  {{ video.13 | safe }}
 </div>
-
-
-<div class = chart>
-    <canvas id="chart_1" width="300" height="300"></canvas>
-    <script>chart_doughnut({{ video.12 | safe }}, {{ video.11 | safe }}, 'chart_1')</script>
-</div>
-
-
-
-
-
 {% endfor %}
-{{ video | safe }}
 {% endblock %}

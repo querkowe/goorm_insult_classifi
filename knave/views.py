@@ -12,6 +12,10 @@ def index(request):
     res = 'index page'
     return render(request, 'knave/index.html', {'title':title, 'content': res})
 
+def test(request):
+    
+    return render(request, 'knave/test.html')
+
 def search(request):
     # try:
     #     url = request.POST['url']
