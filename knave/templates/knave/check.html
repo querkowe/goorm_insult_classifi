@@ -1,0 +1,26 @@
+{% extends 'knave/base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+검색결과
+{% for video in content %}
+<div>
+  <img src="{{ video.3 }}" alt="{{video.1}}"> <br>
+  {{ video.1 | safe }}
+  <a href="https://youtu.be/{{video.0}}"> 영상보기</a> <br>
+  {{ video.2 }} <br>
+  <a href="{% url 'knave:channel' id=video.4 %}">{{ video.5 | safe }}</a> <br>
+  {{ video.6 | safe }} <br>
+  조회수 {{ video.7 | safe }} <br>
+  좋아요 {{ video.8 | safe }} <br>
+  즐겨찾기 {{ video.9 | safe }} <br>
+  댓글 {{ video.10 | safe }} <br>
+  <button onclick="location.href=`{% url 'knave:analysis' id=video.0 %}`" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#replies-df">
+    분석하기
+  </button>
+</div>
+{% endfor %}
+{% endblock %}

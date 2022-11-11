@@ -13,7 +13,7 @@ def index(request):
     return render(request, 'knave/index.html', {'title':title, 'content': res})
 
 def test(request):
-    
+
     return render(request, 'knave/test.html')
 
 def search(request):
@@ -43,6 +43,8 @@ def search(request):
     elif category == 2:
         res = channels(request, text)
     elif category == 3:
+        url_pattern = r'[^\/\=]+'
+        text = re.findall(url_pattern, text)[-1]
         res = video(request, text)
 
     return res
@@ -88,6 +90,30 @@ def video(request, id):
 
     print(video)
 
-    content = scrape.search_video(video)
+    content = scrape.preview_video(video)
+
+    return render(request, 'knave/check.html', {'title': title, 'content': content})
+
+
+def one_analysis(request, id):
+
+    title = "videos"
+
+    print(id)
+
+    content = scrape.search_video(id)
 
     return render(request, 'knave/video.html', {'title': title, 'content': content})
+
+
+def list_analysis(request):
+
+    vids = request.POST.getlist('vid')
+
+    title = "videos"
+
+    print(vids)
+
+    content = scrape.search_video_list(vids)
+
+    return render(request, 'knave/result.html', {'title': title, 'content': content})

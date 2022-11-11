@@ -9,12 +9,20 @@
 검색어를 넣어주세요
 <form class="form" action="{% url 'knave:search' %}" method="post">
   {% csrf_token %}
-  <select class="form-select" name="category">
-    <option value="1">토픽</option>
-    <option value="2">채널</option>
-    <option value="3">영상</option>
-  </select>
-  <input type="text" name="text" class="form-control" placeholder="input">
-  <input type="submit" name="submit" value="enter">
+  <div class="row">
+    <div class="col-4">
+      <select class="form-select" name="category">
+        <option value="1">토픽</option>
+        <option value="2">채널</option>
+        <option value="3">영상</option>
+      </select>
+    </div>
+    <div class="col-6">
+      <input type="text" name="text" class="form-control" placeholder="input">
+    </div>
+    <div class="col-2">
+      <button type="submit" name="submit" class="btn" > enter</button>
+    </div>
+  </div>
 </form>
 {% endblock %}

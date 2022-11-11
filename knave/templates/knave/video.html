@@ -20,6 +20,9 @@
           </p>
           <a href="{% url 'knave:channel' id=video.4 %}">{{ video.5 | safe }}</a> <br>
           {{ video.6 | safe }} <br>
+          <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#replies-df">
+            댓글 보기
+          </button>
         </div>
       </div>
       <div class="chart card">
@@ -38,7 +41,9 @@
         </div>
       </div>
   </div>
-  {{ video.13 | safe }}
+  <div class="collapse" id="replies-df">
+    {{ video.13 | safe }}
+  </div>
 </div>
 {% endfor %}
 {% endblock %}

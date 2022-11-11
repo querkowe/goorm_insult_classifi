@@ -5,17 +5,22 @@
 {% endblock %}
 
 {% block content %}
-{% for video in content %}
-<div>
-  <a href="{% url 'knave:video' id=video.0 %}">{{ video.1 | safe }}</a> <br>
-  {{ video.2 }} <br>
-  <img src="{{ video.3 }}" alt="{{video.1}}"> <br>
-  <a href="{% url 'knave:channel' id=video.4 %}">{{ video.5 | safe }}</a> <br>
-  {{ video.5 | safe }} <br>
-  {{ video.6 | safe }} <br>
-  정상 댓글 {{ video.7 | safe }} <br>
-  악성 댓글 {{ video.8 | safe }} <br>
-  {{ video.9 | safe }} <br>
-</div>
-{% endfor %}
+<form class="form-control" action="{% url 'knave:analysus' %}" method="post">
+  {% csrf_token %}
+  <div class="container">
+    <input type="submit" value="submit">
+  </div>
+  {% for video in content %}
+  <div class="container">
+    <input class="form-check-input" name="vid" type="checkbox" value="{{video.0}}" id="{{video.0}}" checked>
+    <label class="form-check-label" for="{{video.0}}">
+      <a href="{% url 'knave:video' id=video.0 %}">{{ video.1 | safe }}</a> <br>
+      {{ video.2 }} <br>
+      <img src="{{ video.3 }}" alt="{{video.1}}"> <br>
+      <a href="{% url 'knave:channel' id=video.4 %}">{{ video.5 | safe }}</a> <br>
+      {{ video.6 | safe }} <br>
+    </label>
+  </div>
+  {% endfor %}
+</form>
 {% endblock %}
