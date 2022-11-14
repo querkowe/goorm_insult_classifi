@@ -6,44 +6,85 @@
 
 {% block content %}
 {% for video in content %}
-<div class="container">
-  <div class="card-group">
-      <div class="card">
-        <img class="fluid card-img-top" src="{{ video.3 }}" alt="{{video.1}}"> <br>
-        <div class="card-body">
-          <h5 class="card-title">
-            {{ video.1 | safe }}
-          </h5>
-          <a href="https://youtu.be/{{video.0}}">영상보기</a> <br>
-          <p class="card-body">
-            {{ video.2 }}
-          </p>
-          <a href="{% url 'knave:channel' id=video.4 %}">{{ video.5 | safe }}</a> <br>
-          {{ video.6 | safe }} <br>
-          <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#replies-df">
-            댓글 보기
-          </button>
+
+<script type="text/javascript">
+    location.href="#about";
+</script>
+
+<video class="bg-video" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop"><source src="../../static/knave/assets_index/mp4/bg.mp4" type="video/mp4" /></video>
+
+<header id="header">
+  <div class="container">
+
+    <h1><a href="">Knave</a></h1>
+    <!-- Uncomment below if you prefer to use an image logo -->
+    <!-- <a href="index.html" class="mr-auto"><img src="../../static/knave/assets_index/img/logo.png" alt="" class="img-fluid"></a> -->
+    <h2>내용 <span>Nnave-comment</span> 내용</h2>
+
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a class="nav-link" href="#about">About</a></li>
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
+  </div>
+</header><!-- End Header -->
+
+<section id="about" class="about">
+  <!-- ======= About Me ======= -->
+  <div class="about-me container">
+
+    <div class="section-title">
+      <h2>About</h2>
+      <p>Learn more about me</p>
+    </div>
+
+    <div class="row">
+      <div class="container">
+        <div class="card-group">
+            <div class="card">
+              <img class="fluid card-img-top" src="{{ video.3 }}" alt="{{video.1}}"> <br>
+              <div class="card-body">
+                <h5 class="card-title">
+                  {{ video.1 | safe }}
+                </h5>
+                <a href="https://youtu.be/{{video.0}}">영상보기</a> <br>
+                <p class="card-body">
+                  {{ video.2 }}
+                </p>
+                <a href="{% url 'knave:channel' id=video.4 %}">{{ video.5 | safe }}</a> <br>
+                {{ video.6 | safe }} <br>
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#replies-df">
+                  댓글 보기
+                </button>
+              </div>
+            </div>
+            <div class="chart card">
+              <div class="card-img-top">
+                <canvas id="chart_1"></canvas>
+                <script>chart_doughnut({{ video.12 | safe }}, {{ video.11 | safe }}, 'chart_1')</script>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">
+                  통계
+                </h5>
+                조회수 {{ video.7 | safe }} <br>
+                좋아요 {{ video.8 | safe }} <br>
+                즐겨찾기 {{ video.9 | safe }} <br>
+                댓글 {{ video.10 | safe }} <br>
+              </div>
+            </div>
+        </div>
+        <div class="collapse" id="replies-df">
+          {{ video.13 | safe }}
         </div>
       </div>
-      <div class="chart card">
-        <div class="card-img-top">
-          <canvas id="chart_1"></canvas>
-          <script>chart_doughnut({{ video.12 | safe }}, {{ video.11 | safe }}, 'chart_1')</script>
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">
-            통계
-          </h5>
-          조회수 {{ video.7 | safe }} <br>
-          좋아요 {{ video.8 | safe }} <br>
-          즐겨찾기 {{ video.9 | safe }} <br>
-          댓글 {{ video.10 | safe }} <br>
-        </div>
-      </div>
-  </div>
-  <div class="collapse" id="replies-df">
-    {{ video.13 | safe }}
-  </div>
-</div>
+    </div>
+
+
+  </div><!-- End About Me -->
+
+
+
 {% endfor %}
 {% endblock %}

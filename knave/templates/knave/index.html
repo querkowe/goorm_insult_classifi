@@ -6,23 +6,358 @@
 
 {% block content %}
 {{ content }}
-검색어를 넣어주세요
-<form class="form" action="{% url 'knave:search' %}" method="post">
-  {% csrf_token %}
-  <div class="row">
-    <div class="col-4">
-      <select class="form-select" name="category">
-        <option value="1">토픽</option>
-        <option value="2">채널</option>
-        <option value="3">영상</option>
-      </select>
+<video class="bg-video" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop"><source src="../../static/knave/assets_index/mp4/bg.mp4" type="video/mp4" /></video>
+  <!-- ======= Header ======= -->
+  <header id="header">
+    <div class="container">
+      <h1><a href="">Knave</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="mr-auto"><img src="../../static/knave/assets_index/img/logo.png" alt="" class="img-fluid"></a> -->
+      <h2>we analyze <span>Knave-comment</span> and provide chart</h2>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link active" href="#header">Home</a></li>
+          <li><a class="nav-link" href="#about">About</a></li>
+          <li><a class="nav-link" href="#resume">DL Model</a></li>
+          <li><a class="nav-link" href="#services">Services</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
     </div>
-    <div class="col-6">
-      <input type="text" name="text" class="form-control" placeholder="input">
+  </header><!-- End Header -->
+
+  <!-- ======= About Section ======= -->
+  <section id="about" class="about">
+    <!-- ======= About Knave ======= -->
+    <div class="about-me container">
+      <div class="section-title">
+        <h2>About</h2>
+        <p>Learn more about Knave</p>
+      </div>
+      <div class="row">
+        <div class="col-lg-4" data-aos="fade-right">
+          <img src="../../static/knave/assets_index/img/me.jpg" class="img-fluid" alt="">
+        </div>
+
+        <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
+          <h3><a href = "https://github.com/querkowe/goorm_insult_classifi">goorm_insult_classifi</a></h3>
+          <p class="fst-italic">
+            <br>
+            한국 댓글 생태계에는 악플이 많습니다. 악플을 다는 심리적인 요인은 여러방면으로 작용합니다.<br>
+            <br>
+            우리는 악플을 다는 심리적인 요인 중 <span>분노</span>에 초점을 맞췄습니다.<br>
+            <br>
+            토픽에 대해서 악성 댓글의 비율을 분석하고. 대중들의 분노상태를 짐작할 수 있게 도와줍니다.<br>
+
+          </p>
+          <div class="row">
+            <div class="col-lg-6">
+              <ul>
+                <li><i class="bi bi-chevron-right"></i> <strong>-:</strong> <span>4</span></li>
+              </ul>
+            </div>
+          </div>
+          <p>
+          Student on goorm. Anyone can develop.
+          </p>
+        </div>
+      </div>
+
+    </div><!-- End About Me -->
+
+    <!-- ======= Counts ======= -->
+    <div class="counts container">
+      <div class="row">
+        <div class="col-lg-3 col-md-6">
+          <div class="count-box">
+            <i class="bi bi-emoji-smile"></i>
+            <span data-purecounter-start="0" data-purecounter-end="4" data-purecounter-duration="1" class="purecounter"></span>
+            <p>Watching</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
+          <div class="count-box">
+            <i class="bi bi-journal-richtext"></i>
+            <span data-purecounter-start="0" data-purecounter-end="8" data-purecounter-duration="1" class="purecounter"></span>
+            <p>Stars</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
+          <div class="count-box">
+            <i class="bi bi-headset"></i>
+            <span data-purecounter-start="0" data-purecounter-end="0" data-purecounter-duration="1" class="purecounter"></span>
+            <p>Forks</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
+          <div class="count-box">
+            <i class="bi bi-award"></i>
+            <span data-purecounter-start="0" data-purecounter-end="4" data-purecounter-duration="1" class="purecounter"></span>
+            <p>Developer</p>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- End Counts -->
+
+    <!-- ======= Languages  ======= -->
+    <div class="skills container">
+
+      <div class="section-title">
+        <h2>Languages</h2>
+      </div>
+
+      <div class="row skills-content">
+
+        <div class="col-lg-6">
+
+          <div class="progress">
+            <span class="skill">Jupyter Notebook<i class="val">33.6%</i></span>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar" role="progressbar" aria-valuenow="33.6" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+
+          <div class="progress">
+            <span class="skill">CSS <i class="val">26.3%</i></span>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar" role="progressbar" aria-valuenow="26.3" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+
+          <div class="progress">
+            <span class="skill">JavaScript <i class="val">30.8%</i></span>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar" role="progressbar" aria-valuenow="30.8" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+          <div class="progress">
+            <span class="skill">python <i class="val">6.8%</i></span>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar" role="progressbar" aria-valuenow="6.8" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+
+          <div class="progress">
+            <span class="skill">HTML <i class="val">2.5%</i></span>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar" role="progressbar" aria-valuenow="2.5" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div><!-- End Languages -->
+
+    <!-- ======= Contribute ======= -->
+    <div class="testimonials container">
+
+      <div class="section-title">
+        <h2>Contribute</h2>
+      </div>
+
+      <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+        <div class="swiper-wrapper">
+
+          <div class="swiper-slide">
+            <div class="testimonial-item">
+              <p>
+                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                ---
+                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+              </p>
+              <img src="../../static/knave/assets_index/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
+              <h3>querkowe</h3>
+              <h4>Developer</h4>
+            </div>
+          </div><!-- End Contribute item -->
+
+          <div class="swiper-slide">
+            <div class="testimonial-item">
+              <p>
+                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                ---
+                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+              </p>
+              <img src="../../static/knave/assets_index/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
+              <h3>ukseongchoi</h3>
+              <h4>Developer</h4>
+            </div>
+          </div><!-- End Contribute item -->
+
+          <div class="swiper-slide">
+            <div class="testimonial-item">
+              <p>
+                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                ---
+                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+              </p>
+              <img src="../../static/knave/assets_index/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
+              <h3>영환님</h3>
+              <h4>Developer</h4>
+            </div>
+          </div><!-- End Contribute item -->
+
+          <div class="swiper-slide">
+            <div class="testimonial-item">
+              <p>
+                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                ---
+                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+              </p>
+              <img src="../../static/knave/assets_index/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
+              <h3>동호님</h3>
+              <h4>Developer</h4>
+            </div>
+          </div><!-- End Contribute item -->
+
+          <div class="swiper-slide">
+            <div class="testimonial-item">
+              <p>
+                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                ---
+                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+              </p>
+              <img src="../../static/knave/assets_index/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
+              <h3>조대연</h3>
+              <h4>강사님</h4>
+            </div>
+          </div><!-- End Contribute item -->
+
+        </div>
+      </div>
+    </div><!-- End Testimonials  -->
+  </section><!-- End About Section -->
+
+  <!-- ======= DL Model ======= -->
+  <section id="resume" class="resume">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>DL Model</h2>
+        <p>KcELECTRA</p>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <h3 class="resume-title">Sumary</h3>
+          <div class="resume-item pb-0">
+            <h4>제목y</h4>
+            <p><em>내용 (소제목)</em></p>
+            <p>
+            <ul>
+              <li>li 내용</li>
+              <li>li 내용</li>
+              <li>li 내용</li>
+            </ul>
+            </p>
+          </div>
+
+          <h3 class="resume-title">Education</h3>
+          <div class="resume-item">
+            <h4>제목y</h4>
+            <p><em>내용 (소제목)</em></p>
+            <p>내용</p>
+          </div>
+          <div class="resume-item">
+            <h4>제목y</h4>
+            <p><em>내용 (소제목)</em></p>
+            <p>내용</p>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <h3 class="resume-title">Professional Experience</h3>
+          <div class="resume-item">
+            <h4>소제목y</h4>
+            <p><em>Experion, New York, NY </em></p>
+            <p>
+              <em>Rochester Institute of Technology, Rochester, NY</em>
+            </p>
+          </div>
+          <div class="resume-item">
+            <h4>소제목y</h4>
+            <p><em>Stepping Stone Advertising, New York, NY</em></p>
+
+          </div>
+        </div>
+      </div>
+
     </div>
-    <div class="col-2">
-      <button type="submit" name="submit" class="btn" > enter</button>
+  </section><!-- End Resume Section -->
+
+  <!-- ======= Services Section ======= -->
+  <section id="services" class="services">
+    <div class="container">
+      <div class="section-title">
+        <h2>Services</h2>
+        <p>Our Services</p>
+      </div>
+
+      <div class="row">
+        <!-- ======= "hideArea setting" ======= -->
+        <script type="text/javascript">
+        function getShow(){
+        	document.getElementById("hideArea").style.display = "";
+        }
+        function getHide(){
+        	document.getElementById("hideArea").style.display = "none";
+        } </script>
+
+        <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
+          <div class="icon-box">
+            <div class="icon"><i class="bx bx-world"></i></div>
+            <h4><a href="#" onclick = "getShow()" >토픽 분석</a></h4>
+            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
+          <div class="icon-box">
+            <div class="icon"><i class="bx bx-slideshow"></i></div>
+            <h4><a href="#" onclick = "getShow()">채널 분석</a></h4>
+            <p>Quis consequatur saepe eligendi voluptatem consequatur dolor consequuntur</p>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
+          <div class="icon-box">
+            <div class="icon"><i class="bx bx-arch"></i></div>
+            <h4><a href="#" onclick = "getShow()">영상 분석</a></h4>
+            <p>Modi nostrum vel laborum. Porro fugit error sit minus sapiente sit aspernatur</p>
+          </div>
+        </div>
+
+        <div id = "hideArea" style = "display:none">
+          <br>
+          <form class="form" action="{% url 'knave:search' %}" method="post">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-4">
+                <select class="form-select" name="category">
+                  <option value="1">토픽</option>
+                  <option value="2">채널</option>
+                  <option value="3">영상</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <input type="text" name="text" class="form-control" placeholder="input">
+              </div>
+              <div class="col-2">
+                <button type="submit" name="submit" class="btn" > enter</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-  </div>
-</form>
+  </section><!-- End Services Section -->
+
 {% endblock %}

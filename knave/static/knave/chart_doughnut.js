@@ -13,7 +13,7 @@ function chart_doughnut(a, b, id){
         'rgb(255, 99, 132)',
         'rgb(54, 162, 235)',
       ],
-      hoverOffset: 4
+      hoverOffset: 4,
     }]
   };
   const config2 = {
