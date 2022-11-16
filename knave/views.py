@@ -35,8 +35,15 @@ def search(request):
     elif category == 3:
         url_pattern = r'[^\/\=]+'
         text = re.findall(url_pattern, text)[-1]
-        res = video(request, text)
 
+        title = "videos"
+
+        content = scrape.search_video(text)
+
+        if len(content) == 0:
+            return redirect('/error/')
+
+        res = render(request, 'knave/video.html', {'title': title, 'content': content})
     return res
 
 def channel(request, id):
@@ -99,18 +106,18 @@ def video(request, id):
     return render(request, 'knave/check.html', {'title': title, 'content': content})
 
 
-def one_analysis(request, id):
-
-    title = "videos"
-
-    print(id)
-
-    content = scrape.search_video(id)
-
-    if len(content) == 0:
-        return redirect('/error/')
-
-    return render(request, 'knave/video.html', {'title': title, 'content': content})
+# def one_analysis(request, id):
+#
+#     title = "videos"
+#
+#     print(id)
+#
+#     content = scrape.search_video(id)
+#
+#     if len(content) == 0:
+#         return redirect('/error/')
+#
+#     return render(request, 'knave/video.html', {'title': title, 'content': content})
 
 
 def list_analysis(request):

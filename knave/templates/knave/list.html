@@ -5,28 +5,47 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-  <div class="section-title" style="margin-top: 30px">
-    <h2>Services</h2>
-    <p>{{ input_text }} 에 대한 검색 결과</p>
+<script type="text/javascript">
+    location.href="#services";
+</script>
+<video class="bg-video" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop"><source src="../../static/knave/assets_index/mp4/bg.mp4" type="video/mp4" /></video>
+<header id="header">
+  <div class="container">
+    <h1><a href="{% url 'knave:index' %}">Knave</a></h1>
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a class="nav-link" href="#services">Services</a></li>
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
   </div>
+</header><!-- End Header -->
 
-  <div class="row">
-  {% for chan in content %}
-    <div class="col-lg-4 col-md-6 mt-4" style=" border:1px solid white">
-      <div class="icon-box">
-        <div>
-            <img class="channel_img img-fluid" src="{{chan.2 | safe}}"/ >
-        </div>
-        <div>
-           <br>
-           <h4><a href="{% url 'knave:channel' id=chan.3 %}">{{chan.0 | safe}}</a></h4>
-        </div>
-        <p></p> <br>
-        <p>{{chan.1 | safe}}</p> <br>
+<section id="services" >
+  <div class="container">
+      <div class="section-title" style="margin-top: 30px">
+        <h2>Services</h2>
+        <p>분석을 원하는 채널을 선택하세요.</p>
       </div>
-    </div>
-  {% endfor %}
+      <div class="row">
+      {% for chan in content %}
+        <div class="col-lg-4 col-md-6 mt-4" style=" border:1px solid black">
+          <a href="{% url 'knave:channel' id=chan.3 %}">
+            <div class="btn btn-dark icon-box">
+              <div>
+                  <img class="channel_img img-fluid" src="{{chan.2 | safe}}"/ >
+              </div>
+              <div>
+                 <br>
+                  <h4><a href="{% url 'knave:channel' id=chan.3 %}">{{chan.0 | safe}}</a></h4>
+              </div>
+              <p></p> <br>
+              <p>{{chan.1 | safe}}</p> <br>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+      </div>
   </div>
-</div>
+</section>
 {% endblock %}

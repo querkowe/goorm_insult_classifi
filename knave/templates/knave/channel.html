@@ -6,54 +6,54 @@
 
 {% block content %}
 
-<!-- <form class="form-control" action="{% url 'knave:analysus' %}" method="post">
-  {% csrf_token %}
-  <input type="hidden" name="input_text" value="{{ input_text }}">
+<script type="text/javascript">
+    location.href="#services";
+</script>
+<video class="bg-video" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop"><source src="../../static/knave/assets_index/mp4/bg.mp4" type="video/mp4" /></video>
+<header id="header">
   <div class="container">
-    <input type="submit" value="submit">
+    <h1><a href="{% url 'knave:index' %}">Knave</a></h1>
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a class="nav-link" href="#services">Services</a></li>
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
   </div>
-  {% for video in content %}
+</header><!-- End Header -->
+<section id="services" >
   <div class="container">
-    <input class="form-check-input" name="vid" type="checkbox" value="{{video.0}}" id="{{video.0}}">
-    <label class="form-check-label" for="{{video.0}}">
-      <a href="{% url 'knave:video' id=video.0 %}">{{ video.1 | safe }}</a> <br>
-      {{ video.2 }} <br>
-      <img class="img-fluid" src="{{ video.3 }}" alt="{{video.1}}"> <br>
-      <a href="{% url 'knave:channel' id=video.4 %}">{{ video.5 | safe }}</a> <br>
-      {{ video.6 | safe }} <br>
-    </label>
-  </div>
-  {% endfor %}
-</form> -->
-<div class="container">
-  <div class="section-title" style="margin-top: 30px">
-    <h2>Services</h2>
-    <p>{{ input_text }} 에 대한 검색 결과</p>
-  </div>
-</div>
 
-<div class="container">
-  <form class="form-control" action="{% url 'knave:analysus' %}" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="input_text" value="{{ input_text }}">
-    <div class="sub_mit" style="margin: 30px;">
-      <input class="btn btn-success" type="submit" value="분석하기"/>
-    </div>
-
-    <div class="row row-cols-2">
-      {% for video in content %}
-      <div class="col">
-        <input class="form-check-input" name="vid" type="checkbox" value="{{video.0}}" id="{{video.0}}">
-        <label class="form-check-label" for="{{video.0}}" style="margin-bottom: 50px;  border: 1px solid white">
-          <a href="{% url 'knave:video' id=video.0 %}">{{ video.1 | safe }}</a> <br>
-          <p>{{ video.2 }} </p><br>
-          <img src="{{ video.3 }}" alt="{{video.1}}"> <br>
-          <a href="{% url 'knave:channel' id=video.4 %}">{{ video.5 | safe }}</a> <br>
-          <p>{{ video.6 | safe }}</p> <br>
-        </label>
+      <div class="section-title" style="margin-top: 30px">
+        <h2>Services</h2>
+        <p>{{ input_text }} 에 대한 검색 결과입니다.</p>
       </div>
-      {% endfor %}
-    </div>
-  </form>
-</div>
+
+      <div class="row">
+        <form id = "loading" class="row" action="{% url 'knave:analysus' %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="input_text" value="{{ input_text }}">
+          <div class="sub_mit" style="margin: 30px;">
+            <input class="btn btn-success loading" type="submit" value="분석하기"/>
+          </div>
+
+          <div class="row row-cols-2">
+            {% for video in content %}
+            <div >
+              <input class="form-check-input" name="vid" type="checkbox" value="{{video.0}}" id="{{video.0}}">
+              <label class="btn btn-dark icon-box" for="{{video.0}}" style="margin-bottom: 50px;  border: 1px solid black">
+                <a href="{% url 'knave:video' id=video.0 %}">{{ video.1 | safe }}</a> <br>
+                <p>{{ video.2 }} </p><br>
+                <img src="{{ video.3 }}" alt="{{video.1}}"> <br>
+                <a href="{% url 'knave:channel' id=video.4 %}">{{ video.5 | safe }}</a> <br>
+                <p>{{ video.6 | safe }}</p> <br>
+              </label>
+            </div>
+            {% endfor %}
+          </div>
+        </form>
+      </div>
+  </div>
+</section>
+
 {% endblock %}

@@ -10,7 +10,7 @@ urlpatterns = [
     path('channel/<str:id>', views.channel, name='channel'),
     # path('keyword/', views.keyword, name='keyword'),
     path('video/<str:id>', views.video, name='video'),
-    path('analysis/<str:id>', views.one_analysis, name='analysis'),
+    # path('analysis/<str:id>', views.one_analysis, name='analysis'),
     path('analysus/', views.list_analysis, name='analysus'),
     path('error/', views.error, name='error'),
 ]
