@@ -8,14 +8,15 @@ function chart_bar(label, good_num, bad_num, id){
         type: 'bar',
         label: '일반 댓글',
         data: good_num,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.2)'
+        borderColor: 'rgb(0, 0, 0)',
+        backgroundColor: 'rgba(233, 237, 241, 1)'
       }, {
         type: 'bar',
         label: '악성 댓글',
         data: bad_num,
         fill: false,
-        borderColor: 'rgb(54, 162, 235)'
+        borderColor: 'rgb(0, 0, 0)',
+        backgroundColor: 'rgba(166, 184, 196, 0.5)'
       }]
     };
     const config1 = {

@@ -756,8 +756,8 @@ section .container {
 }
 
 .services .icon-box:hover {
-  background: #18d26e;
-  border-color: #18d26e;
+  background: #198754;
+  border-color: #198754;
 }
 
 .services .icon-box:hover .icon {
@@ -765,7 +765,7 @@ section .container {
 }
 
 .services .icon-box:hover .icon i {
-  color: #18d26e;
+  color: #198754;
 }
 
 .services .icon-box:hover .icon::before {
@@ -1204,5 +1204,33 @@ section .container {
 }
 
 .credits a:hover {
+  color: #fff;
+}
+
+
+/*----------------------------------------------------------
+# Custom
+----------------------------------------------------------*/
+
+
+.services .icon-box:focus {
+  background: #18d26e;
+  border-color: #18d26e;
+}
+
+.services .icon-box:focus .icon {
+  background: #fff;
+}
+
+.services .icon-box:focus .icon i {
+  color: #18d26e;
+}
+
+.services .icon-box:focus .icon::before {
+  background: #35e888;
+}
+
+.services .icon-box:focus h4 a,
+.services .icon-box:hover p {
   color: #fff;
 }

@@ -5,45 +5,136 @@
 {% endblock %}
 
 {% block content %}
-{% for video in content %}
-<div class="container">
-  <div class="card-group">
-      <div class="card">
-        <img class="fluid card-img-top" src="{{ video.3 }}" alt="{{video.1}}"> <br>
-        <div class="card-body">
-          <h5 class="card-title">
-            {{ video.1 | safe }}
-          </h5>
-          <a href="https://youtu.be/{{video.0}}">영상보기</a> <br>
-          <p class="card-body">
-            {{ video.2 }}
-          </p>
-          <a href="{% url 'knave:channel' id=video.4 %}">{{ video.5 | safe }}</a> <br>
-          {{ video.6 | safe }} <br>
-          <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#replies-df-{{video.0}}">
-            댓글 보기
-          </button>
+
+<script type="text/javascript">
+    location.href="#about";
+</script>
+
+<video class="bg-video" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop"><source src="../../static/knave/assets_index/mp4/bg.mp4" type="video/mp4" /></video>
+
+<header id="header">
+  <div class="container">
+    <h1><a href="{% url 'knave:index' %}">Knave</a></h1>
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a class="nav-link" href="#about">분석 결과</a></li>
+        <li><a class="nav-link" href="#resume">분석 영상</a></li>
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
+  </div>
+</header><!-- End Header -->
+
+
+<section id="about" class="about">
+
+  <div class = 'container'>
+    <div class = 'row'>
+      <div class="col-lg-6">
+        <div class="section-title">
+          <h2>분석 결과</h2>
+          <p>{{input_text}} 분석 결과.</p>
+        </div>
+        분석 영상 갯수 : <span>{{ content|length }}</span>개<br>
+        전체 댓글 : <span id="total-comment-count"></span>개<br>
+        악성 댓글 : <span>{{sum_bad}}</span> 개<br>
+        악플 비율 : <span id="bad-comment-percentage"></span>%<br>
+        <br>
+        <nav id="navbar" class="navbar">
+        <a class="nav-link" href="#resume"><button class="btn btn-primary" type="button">분석 영상 보러가기</button></a>
+        </nav>
+
+
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card-img-top">
+          <canvas id="chart_{{sum_good}}"></canvas>
+          <script>chart_doughnut({{sum_bad}}, {{sum_good}}, 'chart_{{sum_good}}')</script>
         </div>
       </div>
-      <div class="chart card">
+    </div>
+
+    <div class = 'row'>
+      <div class="card-img-top">
+        <canvas id="aa"></canvas>
+        <script>
+          let labels = [];
+          let goods = [];
+          let bads = [];
+
+          document.getElementById("total-comment-count").innerText = {{sum_bad}} + {{sum_good}};
+          document.getElementById("bad-comment-percentage").innerText = ({{ sum_bad }} / ({{sum_bad}} + {{sum_good}}) * 100).toFixed(2);
+
+          {% for video in content %}
+          labels.push(`{{ video.1 | safe }}`);
+          goods.push({{ video.11 | safe }});
+          bads.push({{ video.12 | safe }});
+          {% endfor %}
+
+          chart_bar(labels, bads, goods, 'aa');
+
+          // chart_bar(['라벨','라벨','라벨','라벨','라벨','라벨','라벨','라벨','라벨','라벨','라벨','라벨'],
+          //   [10,10,10,10,10,10,10,10,10,10,10,10],
+          //   [10,10,10,10,10,10,10,10,10,10,10,10], 'aa');
+        </script>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="resume" class="resume">
+  {% for video in content %}
+  <div class="container">
+    <div class = 'row'>
+      <div class="col-lg-6">
+
+        <img class="fluid card-img-top" src="{{ video.3 }}" alt="{{video.1}}"> <br>
+        <div class="card-body">
+          <h5 class="card-title"><a href="https://youtu.be/{{video.0}}">{{ video.1 | safe }}</a></h5>
+          <p>{{ video.2 }}</p>
+          <br>
+          {{ video.6 | safe }} <br>
+          <br>
+          <h3>채널명 : {{ video.5 | safe }}</h3>
+          <div class="row">
+            <div class="col-lg-6">
+              <a href="{% url 'knave:channel' id=video.4 %}"><button class="btn btn-primary" type="button">채널 분석</button></a> <br>
+            </div>
+            <div class="col-lg-6">
+              <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#replies-df-{{video.0}}">
+                댓글 보기
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
         <div class="card-img-top">
           <canvas id="chart_{{video.0}}"></canvas>
           <script>chart_doughnut({{ video.12 | safe }}, {{ video.11 | safe }}, 'chart_{{video.0}}')</script>
         </div>
-        <div class="card-body">
-          <h5 class="card-title">
-            통계
-          </h5>
+
+        <div>
+          <h5 class="card-title">통계</h5>
           조회수 {{ video.7 | safe }} <br>
           좋아요 {{ video.8 | safe }} <br>
           즐겨찾기 {{ video.9 | safe }} <br>
           댓글수 {{ video.10 | safe }} <br>
         </div>
       </div>
+    </div>
+    <br>
+    <div class = card>
+      <div class="collapse" id="replies-df-{{video.0}}">
+        {{ video.13 | safe }}
+      </div>
+    </div>
   </div>
-  <div class="collapse" id="replies-df-{{video.0}}">
-    {{ video.13 | safe }}
-  </div>
-</div>
-{% endfor %}
+  {% endfor %}
+</section>
+
+
 {% endblock %}

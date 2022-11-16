@@ -247,47 +247,42 @@
       </div>
 
       <div class="row">
-        <div class="col-lg-6">
-          <h3 class="resume-title">Sumary</h3>
+        <div class="col-lg-auto">
+          <h3 class="resume-title">Korean comments ELECTRA</h3>
           <div class="resume-item pb-0">
-            <h4>제목y</h4>
-            <p><em>내용 (소제목)</em></p>
+            <h4>배경</h4>
+            <p><em>공개된 한국어 Transformer 계열 모델들은 대부분 한국어 위키, 뉴스 기사, 책 등 잘 정제된 데이터를 기반으로 학습한 모델입니다. 한편, 실제로 NSMC와 같은 User-Generated Noisy text domain 데이터셋은 정제되지 않았고 구어체 특징에 신조어가 많으며, 오탈자 등 공식적인 글쓰기에서 나타나지 않는 표현들이 빈번하게 등장합니다.</em></p>
             <p>
-            <ul>
-              <li>li 내용</li>
-              <li>li 내용</li>
-              <li>li 내용</li>
+            </p><ul>
+              <li>KcELECTRA는 위와 같은 특성의 데이터셋에 적용하기 위해, 온라인 뉴스에서 댓글과 대댓글을 수집해, 토크나이저와 ELECTRA모델을 처음부터 학습한 Pretrained ELECTRA 모델입니다.</li>
+              <li>기존 KcBERT 대비 데이터셋 증가 및 vocab 확장을 통해 상당한 수준으로 성능이 향상되었습니다.</li>
+              <li>KcELECTRA는 Huggingface의 Transformers 라이브러리를 통해 간편히 불러와 사용할 수 있습니다. (별도의 파일 다운로드가 필요하지 않습니다.)</li>
             </ul>
-            </p>
+            <p></p>
           </div>
 
-          <h3 class="resume-title">Education</h3>
+          <h3 class="resume-title">Train Data &amp; Preprocessing</h3>
           <div class="resume-item">
-            <h4>제목y</h4>
-            <p><em>내용 (소제목)</em></p>
-            <p>내용</p>
+            <h4>Raw Data</h4>
+            <p><em>학습 데이터는 2019.01.01 ~ 2021.03.09 사이에 작성된 댓글 많은 뉴스/혹은 전체 뉴스 기사들의 댓글과 대댓글을 모두 수집한 데이터입니다.</em></p>
+            <p>데이터 사이즈는 텍스트만 추출시 약 17.3GB이며, 1억8천만개 이상의 문장으로 이뤄져 있습니다.</p>
           </div>
           <div class="resume-item">
-            <h4>제목y</h4>
-            <p><em>내용 (소제목)</em></p>
-            <p>내용</p>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <h3 class="resume-title">Professional Experience</h3>
-          <div class="resume-item">
-            <h4>소제목y</h4>
-            <p><em>Experion, New York, NY </em></p>
-            <p>
-              <em>Rochester Institute of Technology, Rochester, NY</em>
-            </p>
+            <h4>Preprocessing</h4>
+            <p><em>PLM 학습을 위해서 전처리를 진행한 과정은 다음과 같습니다.</em></p>
+            <p>1. 한글 및 영어, 특수문자, 그리고 이모지(🥳)까지 학습 범위에 포함</p>
+            <p>2. 댓글 내 중복 문자열 축약</p>
+            <p>3. Cased Model = 영문에 대해서 대소문자를 유지</p>
+            <p>4. 글자 단위 10글자 이하 제거</p>
+            <p>5. 중복 제거</p>
+            <p>6. '000' 제거</p>
           </div>
           <div class="resume-item">
-            <h4>소제목y</h4>
-            <p><em>Stepping Stone Advertising, New York, NY</em></p>
+            <h5>출처: https://github.com/Beomi/KcELECTRA</h5>
+          </div>
 
-          </div>
         </div>
+
       </div>
 
     </div>
@@ -304,44 +299,51 @@
       <div class="row">
         <!-- ======= "hideArea setting" ======= -->
         <script type="text/javascript">
-        function getShow(){
-        	document.getElementById("hideArea").style.display = "";
+        // function getShow(){
+        // 	document.getElementById("hideArea").style.display = "";
+        // }
+        // function getHide(){
+        // 	document.getElementById("hideArea").style.display = "none";
+        // }
+        function changeValue(i, id) {
+          document.getElementById("category-select").value = i;
+          // document.getElementById(id);
         }
-        function getHide(){
-        	document.getElementById("hideArea").style.display = "none";
-        } </script>
+        </script>
 
-        <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
-          <div class="icon-box">
+        <!-- <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off"> -->
+        <div id="feature-select-1" class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" onclick="changeValue(1, 'feature-select-1')">
+          <button type="button" class="btn btn-dark icon-box" data-bs-toggle="collapse" data-bs-target="#hideArea" aria-expanded="false" aria-controls="hideArea">
             <div class="icon"><i class="bx bx-world"></i></div>
-            <h4><a href="#" onclick = "getShow()" >토픽 분석</a></h4>
+            <h4>토픽 분석</h4>
             <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
-          </div>
+          </button>
         </div>
 
-        <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
-          <div class="icon-box">
+        <div id="feature-select-2" class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" onclick="changeValue(2, 'feature-select-2')">
+          <button type="button" class="btn btn-dark icon-box" data-bs-toggle="collapse" data-bs-target="#hideArea" aria-expanded="false" aria-controls="hideArea">
             <div class="icon"><i class="bx bx-slideshow"></i></div>
-            <h4><a href="#" onclick = "getShow()">채널 분석</a></h4>
+            <h4>채널 분석</h4>
             <p>Quis consequatur saepe eligendi voluptatem consequatur dolor consequuntur</p>
-          </div>
+          </button>
         </div>
 
-        <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
-          <div class="icon-box">
+        <div id="feature-select-3" class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" onclick="changeValue(3, 'feature-select-3')">
+          <button type="button" class="btn btn-dark icon-box" data-bs-toggle="collapse" data-bs-target="#hideArea" aria-expanded="false" aria-controls="hideArea">
             <div class="icon"><i class="bx bx-arch"></i></div>
-            <h4><a href="#" onclick = "getShow()">영상 분석</a></h4>
+            <!-- <h4><a href="#" onclick = "getShow()">영상 분석</a></h4> -->
+            <h4>영상 분석</h4>
             <p>Modi nostrum vel laborum. Porro fugit error sit minus sapiente sit aspernatur</p>
-          </div>
+          </button>
         </div>
 
-        <div id = "hideArea" style = "display:none">
+        <div class="collapse" id="hideArea">
           <br>
           <form class="form" action="{% url 'knave:search' %}" method="post">
             {% csrf_token %}
             <div class="row">
               <div class="col-4">
-                <select class="form-select" name="category">
+                <select id="category-select" class="form-select" name="category">
                   <option value="1">토픽</option>
                   <option value="2">채널</option>
                   <option value="3">영상</option>
@@ -351,7 +353,7 @@
                 <input type="text" name="text" class="form-control" placeholder="input">
               </div>
               <div class="col-2">
-                <button type="submit" name="submit" class="btn" > enter</button>
+                <button type="submit" name="submit" class="btn btn-dark btn-outline-success" > enter</button>
               </div>
             </div>
           </form>

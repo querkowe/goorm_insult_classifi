@@ -10,10 +10,10 @@ function chart_doughnut(a, b, id){
       label: '분석 결과',
       data: [a, b],
       backgroundColor: [
-        'rgb(255, 99, 132)',
-        'rgb(54, 162, 235)',
+        'rgba(255, 99, 132, 1)',
+        'rgba(53, 232, 136, 1)'
       ],
-      hoverOffset: 4
+      hoverOffset: 4,
     }]
   };
   const config2 = {

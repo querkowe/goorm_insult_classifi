@@ -5,14 +5,16 @@
 {% endblock %}
 
 {% block content %}
+{{ input_text }} 에 대한 검색 결과
 <form class="form-control" action="{% url 'knave:analysus' %}" method="post">
   {% csrf_token %}
+  <input type="hidden" name="input_text" value="{{ input_text }}">
   <div class="container">
     <input type="submit" value="submit">
   </div>
   {% for video in content %}
   <div class="container">
-    <input class="form-check-input" name="vid" type="checkbox" value="{{video.0}}" id="{{video.0}}" checked>
+    <input class="form-check-input" name="vid" type="checkbox" value="{{video.0}}" id="{{video.0}}">
     <label class="form-check-label" for="{{video.0}}">
       <a href="{% url 'knave:video' id=video.0 %}">{{ video.1 | safe }}</a> <br>
       {{ video.2 }} <br>

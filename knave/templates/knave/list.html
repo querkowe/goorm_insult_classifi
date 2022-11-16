@@ -5,15 +5,28 @@
 {% endblock %}
 
 {% block content %}
-{% for chan in content %}
-  <div>
-    <div>
-      <a href="{% url 'knave:channel' id=chan.3 %}">{{chan.0 | safe}}</a> <br>
-      {{chan.1 | safe}} <br>
-      {{chan.2 | safe}} <br>
-      {{chan.3 | safe}} <br>
-      {{chan.4 | safe}} <br>
-    </div>
+<div class="container">
+  <div class="section-title" style="margin-top: 30px">
+    <h2>Services</h2>
+    <p>{{ input_text }} 에 대한 검색 결과</p>
   </div>
-{% endfor %}
+
+  <div class="row">
+  {% for chan in content %}
+    <div class="col-lg-4 col-md-6 mt-4" style=" border:1px solid white">
+      <div class="icon-box">
+        <div>
+            <img class="channel_img img-fluid" src="{{chan.2 | safe}}"/ >
+        </div>
+        <div>
+           <br>
+           <h4><a href="{% url 'knave:channel' id=chan.3 %}">{{chan.0 | safe}}</a></h4>
+        </div>
+        <p></p> <br>
+        <p>{{chan.1 | safe}}</p> <br>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+</div>
 {% endblock %}

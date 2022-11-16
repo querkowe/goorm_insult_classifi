@@ -158,6 +158,8 @@ def search_video_list(vids):
     youtube = settings.YOUTUBE_OBJ
 
     videos = []
+    sum_good= 0
+    sum_bad = 0
 
     for vid in vids:
         search_response = youtube.videos().list(
@@ -170,6 +172,9 @@ def search_video_list(vids):
         ).execute()
 
         good_count, bad_count, comments_df = get_comments(search_response['items'][0]['id'])
+
+        sum_good += good_count
+        sum_bad += bad_count
 
         videos.append(
             [
@@ -190,7 +195,7 @@ def search_video_list(vids):
             ]
         )
 
-    return videos
+    return videos, sum_good, sum_bad
 
 def search_channel(channel):
     query_text = channel

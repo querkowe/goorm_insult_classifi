@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import Http404
 
 import re
@@ -16,23 +16,13 @@ def test(request):
 
     return render(request, 'knave/test.html')
 
+def error(request):
+    return render(request, 'knave/error.html', {'title': 'Error', 'content': '검색결과가 없습니다'})
+
 def search(request):
-    # try:
-    #     url = request.POST['url']
-    #     print(url)
-    #
-    #     url_pattern = r'[^\/\=]+'
-    #
-    #     title = 'search'
-    #     video = re.findall(url_pattern, url)[-1]
-    #
-    #     comments = scrape.get_comments(video)
-    #     content = analysis.prepare_model(comments)
-    #
-    #     return render(request, 'knave/result.html', {'title': title, 'content': content})
-    # except:
-    #     return render(request, 'knave/result.html', {'title': 'Error', 'content': 'something goes wrong...'})
     text = request.POST.get('text')
+    if len(text) == 0:
+        return redirect('/error/')
     category = int(request.POST.get('category'))
     print(text)
     print(category)
@@ -57,7 +47,12 @@ def channel(request, id):
 
     content = scrape.search_channel(id)
 
-    return render(request, 'knave/channel.html', {'title': title, 'content': content})
+    if len(content) == 0:
+        return redirect('/error/')
+
+    input_text = content[0][5]
+
+    return render(request, 'knave/channel.html', {'title': title, 'content': content, 'input_text': input_text})
 
 
 def channels(request, query):
@@ -68,7 +63,10 @@ def channels(request, query):
 
     content = scrape.channel_list(query)
 
-    return render(request, 'knave/list.html', {'title': title, 'content': content})
+    if len(content) == 0:
+        return redirect('/error/')
+
+    return render(request, 'knave/list.html', {'title': title, 'content': content, 'input_text': query})
 
 
 def keyword(request, query):
@@ -79,7 +77,10 @@ def keyword(request, query):
 
     content = scrape.search_text(query)
 
-    return render(request, 'knave/keyword.html', {'title': title, 'content': content})
+    if len(content) == 0:
+        return redirect('/error/')
+
+    return render(request, 'knave/keyword.html', {'title': title, 'content': content, 'input_text': query})
 
 
 def video(request, id):
@@ -92,6 +93,9 @@ def video(request, id):
 
     content = scrape.preview_video(video)
 
+    if len(content) == 0:
+        return redirect('/error/')
+
     return render(request, 'knave/check.html', {'title': title, 'content': content})
 
 
@@ -103,10 +107,15 @@ def one_analysis(request, id):
 
     content = scrape.search_video(id)
 
+    if len(content) == 0:
+        return redirect('/error/')
+
     return render(request, 'knave/video.html', {'title': title, 'content': content})
 
 
 def list_analysis(request):
+
+    input_text = request.POST.get('input_text')
 
     vids = request.POST.getlist('vid')
 
@@ -114,6 +123,9 @@ def list_analysis(request):
 
     print(vids)
 
-    content = scrape.search_video_list(vids)
+    content, sum_good, sum_bad = scrape.search_video_list(vids)
 
-    return render(request, 'knave/result.html', {'title': title, 'content': content})
+    if len(content) == 0:
+        return redirect('/error/')
+
+    return render(request, 'knave/result.html', {'title': title, 'content': content, 'input_text': input_text, 'sum_good': sum_good, 'sum_bad': sum_bad})
