@@ -66,28 +66,28 @@
     <div class="row">
       <div class="col-lg-3 col-md-6">
         <div class="count-box">
-          <i class="bi bi-emoji-smile"></i>
+          <i class="bi bi-eye"></i>
           <span data-purecounter-start="0" data-purecounter-end="4" data-purecounter-duration="1" class="purecounter"></span>
           <p>Watching</p>
         </div>
       </div>
       <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
         <div class="count-box">
-          <i class="bi bi-journal-richtext"></i>
+          <i class="bi bi-star"></i>
           <span data-purecounter-start="0" data-purecounter-end="8" data-purecounter-duration="1" class="purecounter"></span>
           <p>Stars</p>
         </div>
       </div>
       <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
         <div class="count-box">
-          <i class="bi bi-headset"></i>
+          <i class="bi bi-diagram-2"></i>
           <span data-purecounter-start="0" data-purecounter-end="0" data-purecounter-duration="1" class="purecounter"></span>
           <p>Forks</p>
         </div>
       </div>
       <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
         <div class="count-box">
-          <i class="bi bi-award"></i>
+          <i class="bi bi-code-slash"></i>
           <span data-purecounter-start="0" data-purecounter-end="4" data-purecounter-duration="1" class="purecounter"></span>
           <p>Developer</p>
         </div>
@@ -152,7 +152,7 @@
               ---
               <i class="bx bxs-quote-alt-right quote-icon-right"></i>
             </p>
-            <img src="../../static/knave/assets_index/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
+            <img src="https://avatars.githubusercontent.com/u/35722034?v=4" class="testimonial-img" alt="">
             <h3>querkowe</h3>
             <h4>Developer</h4>
           </div>
@@ -188,7 +188,7 @@
               ---
               <i class="bx bxs-quote-alt-right quote-icon-right"></i>
             </p>
-            <img src="../../static/knave/assets_index/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
+            <img src="https://avatars.githubusercontent.com/u/75252716?v=4" class="testimonial-img" alt="">
             <h3>동호님</h3>
             <h4>Developer</h4>
           </div>
@@ -251,56 +251,81 @@
       <p>Our Services</p>
     </div>
     <div class="row">
-      <!-- ======= "hideArea setting" ======= -->
+      <!-- ======= "hidearea setting" ======= -->
       <script type="text/javascript">
       // function getShow(){
-      // 	document.getElementById("hideArea").style.display = "";
+      // 	document.getElementById("hidearea").style.display = "";
       // }
       // function getHide(){
-      // 	document.getElementById("hideArea").style.display = "none";
+      // 	document.getElementById("hidearea").style.display = "none";
       // }
-      function changeValue(i, id) {
-        document.getElementById("category-select").value = i;
-        // document.getElementById(id);
+      let category_selected = 0;
+      function changeValue(i) {
+        let cat = document.getElementById("category-select");
+        let hide = document.getElementById("hidearea");
+        cat.value = i;
+
+        if(category_selected == i) {
+          // document.getElementById("hidearea").classList.remove("show");
+          setTimeout(() => hide.classList.remove("show"), 400);
+          setTimeout(() => document.getElementById("feature-select-"+i).blur(), 500);
+          category_selected = 0;
+        } else {
+          setTimeout(() => document.getElementById("search-bar-input").focus(), 500);
+          category_selected = i;
+        }
+
+      }
+      function getfocused() {
+        let val = document.getElementById("category-select").value;
+        if(val == 1) {
+          document.getElementById("feature-select-1").focus();
+        }
+        else if (val == 2) {
+          document.getElementById("feature-select-2").focus();
+        }
+        else if(val == 3) {
+          document.getElementById("feature-select-3").focus();
+        }
+        setTimeout(() => document.getElementById("search-bar-input").focus(), 500);
       }
       </script>
       <!-- <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off"> -->
-      <div id="feature-select-1" class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" onclick="changeValue(1, 'feature-select-1')">
-        <button type="button" class="btn btn-dark icon-box" data-bs-toggle="collapse" data-bs-target="#hideArea" aria-expanded="false" aria-controls="hideArea">
+      <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" onclick="changeValue(1)">
+        <button id="feature-select-1" type="button" class="btn btn-dark icon-box" data-bs-toggle="collapse" data-bs-target="#hidearea" aria-expanded="false" aria-controls="hidearea">
           <div class="icon"><i class="bx bx-world"></i></div>
           <h4>토픽 분석</h4>
           <p>검색 토픽에 대해서 댓글을 수집하고, 댓글의 악플 비율을 확인하여 그래프로 보여줍니다. </p>
         </button>
       </div>
-      <div id="feature-select-2" class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" onclick="changeValue(2, 'feature-select-2')">
-        <button type="button" class="btn btn-dark icon-box" data-bs-toggle="collapse" data-bs-target="#hideArea" aria-expanded="false" aria-controls="hideArea">
+      <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" onclick="changeValue(2)">
+        <button id="feature-select-2" type="button" class="btn btn-dark icon-box" data-bs-toggle="collapse" data-bs-target="#hidearea" aria-expanded="false" aria-controls="hidearea">
           <div class="icon"><i class="bx bx-slideshow"></i></div>
           <h4>채널 분석</h4>
           <p>원하는 채널에 대해서 댓글을 수집하고, 댓글의 악플 비율을 확인하여 그래프로 보여줍니다. </p>
         </button>
       </div>
-      <div id="feature-select-3" class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" onclick="changeValue(3, 'feature-select-3')">
-        <button type="button" class="btn btn-dark icon-box" data-bs-toggle="collapse" data-bs-target="#hideArea" aria-expanded="false" aria-controls="hideArea">
+      <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" onclick="changeValue(3)">
+        <button id="feature-select-3" type="button" class="btn btn-dark icon-box" data-bs-toggle="collapse" data-bs-target="#hidearea" aria-expanded="false" aria-controls="hidearea">
           <div class="icon"><i class="bx bx-arch"></i></div>
-          <!-- <h4><a href="#" onclick = "getShow()">영상 분석</a></h4> -->
           <h4>영상 분석</h4>
           <p>원하는 영상에 대해서 댓글을 수집하고, 댓글의 악플 비율을 확인하여 그래프로 보여줍니다.</p>
         </button>
       </div>
-      <div class="collapse" id="hideArea">
+      <div class="collapse" id="hidearea">
         <br>
         <form class="form" action="{% url 'knave:search' %}" method="post">
           {% csrf_token %}
           <div class="row">
             <div class="col-4">
-              <select id="category-select" class="form-select" name="category">
+              <select id="category-select" class="form-select" name="category" onchange="getfocused()">
                 <option value="1">토픽</option>
                 <option value="2">채널</option>
                 <option value="3">영상</option>
               </select>
             </div>
             <div class="col-6">
-              <input type="text" name="text" class="form-control" placeholder="input">
+              <input id="search-bar-input" type="text" name="text" class="form-control" placeholder="input">
             </div>
             <div class="col-2">
               <button type="submit" name="submit" class="btn btn-dark btn-outline-success" > enter</button>

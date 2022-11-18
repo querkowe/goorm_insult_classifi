@@ -29,11 +29,11 @@
       </div>
       <div class="row">
       {% for chan in content %}
-        <div class="col-lg-4 col-md-6 mt-4" style=" border:1px solid black">
+        <div class="col-lg-4 col-md-6 mt-4">
           <a href="{% url 'knave:channel' id=chan.3 %}">
             <div class="btn btn-dark icon-box">
               <div>
-                  <img class="channel_img img-fluid" src="{{chan.2 | safe}}"/ >
+                  <img class="channel_img img-fluid" src="{{chan.2 | safe}}" / >
               </div>
               <div>
                  <br>

@@ -4,8 +4,10 @@ from django.conf import settings
 
 def predict_sent(sent):
 
+    # settings.py에서 상수로 가지고 있는 모델과 토크나이저 활용
     model = settings.KNAVE_MODEL
     tokenizer = settings.KNAVE_TOKENIZER
+    # 쿠다 장치 설정
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
     # 입력된 문장 토크나이징
@@ -33,11 +35,6 @@ def predict_sent(sent):
 
     logits = logits.detach().cpu()
     result = logits.argmax(-1)
-
-    # if result == 0:
-    #     result = " >> 악성댓글 👿"
-    # elif result == 1:
-    #     result = " >> 정상댓글 😀"
 
     if result == 0:
         result = 0

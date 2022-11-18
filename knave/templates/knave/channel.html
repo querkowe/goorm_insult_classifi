@@ -21,12 +21,14 @@
     </nav><!-- .navbar -->
   </div>
 </header><!-- End Header -->
+
 <section id="services" >
   <div class="container">
-
       <div class="section-title" style="margin-top: 30px">
-        <h2>Services</h2>
+        <h2>Channel</h2>
         <p>{{ input_text }} 에 대한 검색 결과입니다.</p>
+        <span>영상을 선택하고 분석하기를 눌러주세요.</span>
+        <span>각 영상의 분석에는 영상당 20초 정도 소요됩니다.</span>
       </div>
 
       <div class="row">
@@ -41,8 +43,8 @@
             {% for video in content %}
             <div >
               <input class="form-check-input" name="vid" type="checkbox" value="{{video.0}}" id="{{video.0}}">
-              <label class="btn btn-dark icon-box" for="{{video.0}}" style="margin-bottom: 50px;  border: 1px solid black">
-                <a href="{% url 'knave:video' id=video.0 %}">{{ video.1 | safe }}</a> <br>
+              <label class="btn btn-success icon-box" for="{{video.0}}" style="margin-bottom: 50px;  border: 1px solid black">
+                <a target="_blank" rel="noopener noreferrer" href="https://youtu.be/{{video.0}}">{{ video.1 | safe }}</a> <br>
                 <p>{{ video.2 }} </p><br>
                 <img src="{{ video.3 }}" alt="{{video.1}}"> <br>
                 <a href="{% url 'knave:channel' id=video.4 %}">{{ video.5 | safe }}</a> <br>

@@ -2,8 +2,14 @@ from googleapiclient.discovery import build
 from oauth2client.tools import argparser
 from django.conf import settings
 import pandas as pd
+from datetime import datetime
 
 from . import analysis
+
+# 유튜브의 ISO 8601 형식의 날짜 문자열 면#
+def date_parse(src):
+    dt = datetime.fromisoformat(src[:-1])
+    return dt.strftime("%Y년 %m월 %d일 %H시 %M분 %S초")
 
 def get_comments(video):
 
@@ -15,6 +21,7 @@ def get_comments(video):
     # 비디오 주소 맨 뒤쪽에 있음
     video_id = video
 
+    # 영상 하나당 최대 댓글 갯수 -> 시간 관계상 제
     limit = 100
 
     comments = list()
@@ -27,8 +34,7 @@ def get_comments(video):
         for item in response['items']:
             comment = item['snippet']['topLevelComment']['snippet']
 
-            # comments.append([comment['textDisplay'], comment['authorDisplayName'], comment['publishedAt'], comment['likeCount']])
-            comments.append([comment['textDisplay'], comment['publishedAt'], comment['likeCount']])
+            comments.append([comment['textDisplay'], date_parse(comment['publishedAt']), comment['likeCount']])
 
             result = analysis.predict_sent(comments[-1][0])
 
@@ -41,51 +47,10 @@ def get_comments(video):
 
             comments[-1].append(result)
 
+    return good_count, bad_count, pd.DataFrame(comments, columns=['댓글 내용', '게시일', '좋아요', '판별 결과']).to_html(classes='table table-dark', index=False).strip()
 
-    # print(len(comments))
 
-    # return good_count, bad_count, pd.DataFrame(comments, columns=['comment', 'author', 'date', 'num_likes', 'is_bad']).to_html().strip()
-    return good_count, bad_count, pd.DataFrame(comments, columns=['댓글 내용', '게시일', '좋아요', '판별 결과']).to_html(classes='table', index=False).strip()
-
-# def search_text(text):
-#     query_text = text
-#     max_results = 10
-#     youtube = settings.YOUTUBE_OBJ
-#
-#     search_response = youtube.search().list(
-#         q=query_text,
-#         order="relevance",
-#         part="snippet",
-#         type='video',
-#         maxResults=max_results,
-#         # videoEmbeddable=true,
-#         regionCode="kr",
-#         relevanceLanguage="ko"
-#     ).execute()
-#
-#     videos = []
-#
-#     for i in range(len(search_response['items'])):
-#
-#         good_count, bad_count, comments_df = get_comments(search_response['items'][i]['id']['videoId'])
-#
-#         videos.append(
-#             [
-#                 search_response['items'][i]['id']['videoId'].strip(),
-#                 search_response['items'][i]['snippet']['title'].strip(),
-#                 search_response['items'][i]['snippet']['description'].strip(),
-#                 search_response['items'][i]['snippet']['thumbnails']['high']['url'].strip(),
-#                 search_response['items'][i]['snippet']['channelId'].strip(),
-#                 search_response['items'][i]['snippet']['channelTitle'].strip(),
-#                 search_response['items'][i]['snippet']['publishedAt'].strip(),
-#                 good_count,
-#                 bad_count,
-#                 comments_df
-#             ]
-#         )
-#
-#     return videos
-
+# 키워드를 통한 영상 목록 검색
 def search_text(text):
     query_text = text
     max_results = 10
@@ -114,12 +79,14 @@ def search_text(text):
                 search_response['items'][i]['snippet']['thumbnails']['high']['url'].strip(),
                 search_response['items'][i]['snippet']['channelId'].strip(),
                 search_response['items'][i]['snippet']['channelTitle'].strip(),
-                search_response['items'][i]['snippet']['publishedAt'].strip(),
+                date_parse(search_response['items'][i]['snippet']['publishedAt'].strip()),
+                # search_response['items'][i]['snippet']['publishedAt'].strip(),
             ]
         )
 
     return videos
 
+# 키워드를 통한 채널 리스트 검색
 def channel_list(text):
     query_text = text
     max_results = 10
@@ -147,12 +114,14 @@ def channel_list(text):
                 search_response['items'][i]['snippet']['thumbnails']['high']['url'].strip(),
                 search_response['items'][i]['snippet']['channelId'].strip(),
                 # search_response['items'][i]['snippet']['channelTitle'],
-                search_response['items'][i]['snippet']['publishedAt'].strip(),
+                date_parse(search_response['items'][i]['snippet']['publishedAt'].strip()),
+                # search_response['items'][i]['snippet']['publishedAt'].strip(),
             ]
         )
 
     return channels
 
+# 영상 id 리스트를 통한 영상 정보 검색 및 분석
 def search_video_list(vids):
     max_results = 10
     youtube = settings.YOUTUBE_OBJ
@@ -184,7 +153,8 @@ def search_video_list(vids):
                 search_response['items'][0]['snippet']['thumbnails']['high']['url'].strip(),
                 search_response['items'][0]['snippet']['channelId'].strip(),
                 search_response['items'][0]['snippet']['channelTitle'].strip(),
-                search_response['items'][0]['snippet']['publishedAt'].strip(),
+                date_parse(search_response['items'][0]['snippet']['publishedAt'].strip()),
+                # search_response['items'][0]['snippet']['publishedAt'].strip(),
                 search_response['items'][0]['statistics']['viewCount'].strip(),
                 search_response['items'][0]['statistics']['likeCount'].strip(),
                 search_response['items'][0]['statistics']['favoriteCount'].strip(),
@@ -197,6 +167,7 @@ def search_video_list(vids):
 
     return videos, sum_good, sum_bad
 
+# 키워드를 통한 채널 검색
 def search_channel(channel):
     query_text = channel
     max_results = 10
@@ -225,12 +196,14 @@ def search_channel(channel):
                 search_response['items'][i]['snippet']['thumbnails']['high']['url'].strip(),
                 search_response['items'][i]['snippet']['channelId'].strip(),
                 search_response['items'][i]['snippet']['channelTitle'].strip(),
-                search_response['items'][i]['snippet']['publishedAt'].strip()
+                date_parse(search_response['items'][i]['snippet']['publishedAt'].strip())
+                # search_response['items'][i]['snippet']['publishedAt'].strip()
             ]
         )
 
     return videos
 
+# 단일 영상 정보 검색 및 분석
 def search_video(id):
     query_text = id
     youtube = settings.YOUTUBE_OBJ
@@ -257,7 +230,8 @@ def search_video(id):
                 search_response['items'][i]['snippet']['thumbnails']['high']['url'].strip(),
                 search_response['items'][i]['snippet']['channelId'].strip(),
                 search_response['items'][i]['snippet']['channelTitle'].strip(),
-                search_response['items'][i]['snippet']['publishedAt'].strip(),
+                date_parse(search_response['items'][i]['snippet']['publishedAt'].strip()),
+                # search_response['items'][i]['snippet']['publishedAt'].strip(),
                 search_response['items'][i]['statistics']['viewCount'].strip(),
                 search_response['items'][i]['statistics']['likeCount'].strip(),
                 search_response['items'][i]['statistics']['favoriteCount'].strip(),
@@ -270,6 +244,7 @@ def search_video(id):
 
     return videos
 
+# 영상 정보 검색
 def preview_video(id):
     query_text = id
     youtube = settings.YOUTUBE_OBJ
@@ -294,7 +269,8 @@ def preview_video(id):
                 search_response['items'][i]['snippet']['thumbnails']['high']['url'].strip(),
                 search_response['items'][i]['snippet']['channelId'].strip(),
                 search_response['items'][i]['snippet']['channelTitle'].strip(),
-                search_response['items'][i]['snippet']['publishedAt'].strip(),
+                date_parse(search_response['items'][i]['snippet']['publishedAt'].strip()),
+                # search_response['items'][i]['snippet']['publishedAt'].strip(),
                 search_response['items'][i]['statistics']['viewCount'].strip(),
                 search_response['items'][i]['statistics']['likeCount'].strip(),
                 search_response['items'][i]['statistics']['favoriteCount'].strip(),

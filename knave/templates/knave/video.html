@@ -29,10 +29,10 @@
 
 <section id="about" class="about">
   <!-- ======= About Me ======= -->
-  <div class="about-me container">
+  <div class="about-me container" >
     <div class="section-title">
-      <h2>악플 분석</h2>
-      <p>분석 결과</p>
+      <h2>Analysis</h2>
+      <p >분석 결과</p>
     </div>
 
     {% for video in content %}
@@ -41,17 +41,17 @@
         <img class="fluid card-img-top" src="{{ video.3 }}" alt="{{video.1}}"> <br>
         <div class="card-body">
           <h5 class="card-title"><a href="https://youtu.be/{{video.0}}">{{ video.1 | safe }}</a></h5>
-            <p >{{ video.2 }}</p>
+            <p class="max-lines">{{ video.2 }}</p>
             <br>
             {{ video.6 | safe }} <br>
             <br>
             <h3>채널명 : {{ video.5 | safe }}</h3>
             <div class="row">
               <div class="col-lg-6">
-                <a href="{% url 'knave:channel' id=video.4 %}"><button class="btn btn-primary" type="button">채널 분석</button></a> <br>
+                <a href="{% url 'knave:channel' id=video.4 %}"><button class="btn btn-success" type="button">채널 분석</button></a> <br>
               </div>
               <div class="col-lg-6">
-                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#replies-df">
+                <button class="btn btn-success" type="button" onclick="replylisttoggle('#replies-df-{{video.0}}')">
                   댓글 보기
                 </button>
               </div>
@@ -74,14 +74,18 @@
         </div>
       </div>
       <br>
-      <div class = card>
-        <div class="collapse" id="replies-df">
-          {{ video.13 | safe }}
-        </div>
+      <div class="collapse" id="replies-df-{{video.0}}">
+        {{ video.13 | safe }}
       </div>
     </div><!-- End About Me -->
     {% endfor %}
   </div>
+  <script type="text/javascript">
+    function replylisttoggle(id) {
+      let hide = document.querySelector(id);
+      setTimeout(() => hide.classList.toggle("show"), 400);
+    }
+  </script>
 </section>
 
 {% endblock %}

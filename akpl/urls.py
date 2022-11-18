@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+# 에러 페이지 연결
+handler404 = 'knave.views.error'
+handler500 = 'knave.views.error'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('knave.urls')),

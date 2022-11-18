@@ -17,8 +17,8 @@
     <h1><a href="{% url 'knave:index' %}">Knave</a></h1>
     <nav id="navbar" class="navbar">
       <ul>
-        <li><a class="nav-link" href="#about">분석 결과</a></li>
-        <li><a class="nav-link" href="#resume">분석 영상</a></li>
+        <li><a class="nav-link" href="#about">분석 개요</a></li>
+        <li><a class="nav-link" href="#resume">분석 상세</a></li>
       </ul>
       <i class="bi bi-list mobile-nav-toggle"></i>
     </nav><!-- .navbar -->
@@ -41,7 +41,7 @@
         악플 비율 : <span id="bad-comment-percentage"></span>%<br>
         <br>
         <nav id="navbar" class="navbar">
-        <a class="nav-link" href="#resume"><button class="btn btn-primary" type="button">분석 영상 보러가기</button></a>
+        <a class="nav-link" href="#resume"><button class="btn btn-dark" type="button">분석 영상 보러가기</button></a>
         </nav>
 
 
@@ -62,14 +62,20 @@
           let labels = [];
           let goods = [];
           let bads = [];
+          let tmp = '';
 
           document.getElementById("total-comment-count").innerText = {{sum_bad}} + {{sum_good}};
           document.getElementById("bad-comment-percentage").innerText = ({{ sum_bad }} / ({{sum_bad}} + {{sum_good}}) * 100).toFixed(2);
 
           {% for video in content %}
-          labels.push(`{{ video.1 | safe }}`);
-          goods.push({{ video.11 | safe }});
-          bads.push({{ video.12 | safe }});
+          tmp = `{{ video.1 | safe }}`
+          if(tmp.length > 15) {
+            tmp = tmp.substr(0, 12);
+            tmp += '...';
+          }
+          labels.push(tmp);
+          goods.push({{ video.12 | safe }});
+          bads.push({{ video.11 | safe }});
           {% endfor %}
 
           chart_bar(labels, bads, goods, 'aa');
@@ -93,17 +99,20 @@
         <img class="fluid card-img-top" src="{{ video.3 }}" alt="{{video.1}}"> <br>
         <div class="card-body">
           <h5 class="card-title"><a href="https://youtu.be/{{video.0}}">{{ video.1 | safe }}</a></h5>
-          <p>{{ video.2 }}</p>
+          <p class="max-lines">{{ video.2 }}</p>
           <br>
-          {{ video.6 | safe }} <br>
+          <span id="date-{{video.0}}">
+            {{ video.6 | safe }}
+          </span>
+          <br>
           <br>
           <h3>채널명 : {{ video.5 | safe }}</h3>
           <div class="row">
             <div class="col-lg-6">
-              <a href="{% url 'knave:channel' id=video.4 %}"><button class="btn btn-primary" type="button">채널 분석</button></a> <br>
+              <a href="{% url 'knave:channel' id=video.4 %}"><button class="btn btn-success" type="button">채널 분석</button></a> <br>
             </div>
             <div class="col-lg-6">
-              <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#replies-df-{{video.0}}">
+              <button class="btn btn-success" type="button" onclick="replylisttoggle('#replies-df-{{video.0}}')">
                 댓글 보기
               </button>
             </div>
@@ -127,13 +136,19 @@
       </div>
     </div>
     <br>
-    <div class = card>
-      <div class="collapse" id="replies-df-{{video.0}}">
+    <!-- <div class="card"> -->
+      <div id="replies-df-{{video.0}}" class="collapse">
         {{ video.13 | safe }}
       </div>
-    </div>
+    <!-- </div> -->
   </div>
   {% endfor %}
+  <script type="text/javascript">
+    function replylisttoggle(id) {
+      let hide = document.querySelector(id);
+      setTimeout(() => hide.classList.toggle("show"), 200);
+    }
+  </script>
 </section>
 
 

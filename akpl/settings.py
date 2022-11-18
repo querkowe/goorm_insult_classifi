@@ -24,8 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
+# 추가적으로 유튜브 api key를 활용하기 위한 변수화
 API_KEY = knave_init.youtube_api_key()
 
+# 유튜브 api 활용하기 위한 객체
 YOUTUBE_OBJ = build("youtube", "v3", developerKey=API_KEY)
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -130,6 +132,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+# 분석을 위한 모델과 토크나이저
 KNAVE_MODEL = model_setting.load_model()
 KNAVE_TOKENIZER = model_setting.knave_tokenizer()
 

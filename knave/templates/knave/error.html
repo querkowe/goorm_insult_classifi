@@ -5,6 +5,31 @@
 {% endblock %}
 
 {% block content %}
-{{ content }} <br>
-<a href="{% url 'knave:index' %}">홈으로</a>
+<video class="bg-video" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop"><source src="../../static/knave/assets_index/mp4/bg.mp4" type="video/mp4" /></video>
+<header id="header" class="header-top">
+  <div class="container">
+    <h1><a href="{% url 'knave:index' %}">Knave</a></h1>
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a class="nav-link active" href="#services">Services</a></li>
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
+  </div>
+</header><!-- End Header -->
+
+<section id="services" class="section-show">
+  <div class="container">
+      <div class="section-title" style="margin-top: 30px">
+        <h2>Services</h2>
+        <p>페이지를 표시할 수 없습니다</p>
+      </div>
+      <div class="row">
+        <p>
+          {{ content }} <br>
+          <a href="javascript:history.back()">이전 페이지</a>
+        </p>
+      </div>
+  </div>
+</section>
 {% endblock %}
